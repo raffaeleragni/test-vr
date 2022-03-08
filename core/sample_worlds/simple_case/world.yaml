@@ -1,0 +1,10 @@
+---
+
+objects:
+  - id: "id"
+    position: {x: 1, y: 2, z: 3}
+    rotation: {x: 4, y: 5, z: 6, w: 7}
+    scale: {x: 8, y: 9, z: 10}
+    plugins:
+      - id: "hello-world"
+        type: "script"
