@@ -1,5 +1,5 @@
-#ifndef APPLICATION_CLASS_RENDERING_H
-#define APPLICATION_CLASS_RENDERING_H
+#ifndef DESKTOP_SRC_RENDERING_HPP_
+#define DESKTOP_SRC_RENDERING_HPP_
 
 #include <SDL.h>
 #include <SDL_opengl.h>
@@ -8,12 +8,13 @@
 
 namespace application {
 
-  class IRendering {
-  public:
-    static IRendering* create();
-    virtual ~IRendering() {};
-    virtual void renderFrame() = 0;
-  };
-}
+class IRendering {
+ public:
+  static IRendering* create();
+  virtual ~IRendering() {}
+  virtual void renderFrame() = 0;
+};
 
-#endif
+}  // namespace application
+
+#endif  // DESKTOP_SRC_RENDERING_HPP_

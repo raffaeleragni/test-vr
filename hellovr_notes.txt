@@ -1,0 +1,89 @@
+
+| desktop     ?     web terminal|
+| core       core       core    |
+|           network             |
+| update queues                 |
+| world updates                 |
+| asset updates                 |
+
+uniqueness of object id and plugin id: reject overwrite?
+
+each core run their scripts for low latency updates (ex avatar of self)
+each core trigger collisions
+  physics? parallel phsyics is bound to desync.
+
+asset plugins
+physics plugin
+  holds momentum, forces etc.
+collision plugin<shape>
+  detects points of collisions, their vector and intensity based on previous speed
+  needs to know physics or just does delta each game loop?
+shapes: IShapeMesh, IShapeSphere
+
+how rendering works
+  render plugins holding render info but doing nothing on core, just saying that something will be rendered
+  they will be parsed or specially exposed by core to terminals for rendering
+  same with audio but needs spot triggering for effects or status sync/seek for players
+
+what about inputs going back to the core? Does this live on the core or is forwarded by the terminal?
+ library for interface devices
+  controller inputs
+    HMD position
+    Device positions (in general)
+    User inputs, buttons, analog sticks
+    Other inputs (eye or face tracking...)
+  controller outputs
+    feedback suits
+    register custom devices?
+
+  
+node plugins with input/outputs for node, scripted or coded?
+
+networking download asset, connection tcp
+download initial world tcp
+update queue connection udp
+create new slots udp?
+
+networking embedded into core
+
+desktop
+ --- core
+    --- networking
+
+web?
+
+core - core - core
+
+network topology based?
+connect to any core
+via contact list?
+
+queued updates between cores
+  system to allow clients to request replay of missed events
+  this requires a sequence number from the updates
+  queue numbers are unique per emitter
+    core+sequence > to everybody's update queue
+  how to sort events between different sources
+how to backpressure if all clients are way too far
+  also how to measure that farness
+
+full sync of data between cores: at startup, but also periodically?
+
+batching update instructions
+reply with:
+ latest sequence number received
+ array of missed sequence numbers
+periodical based OR if array of missed is exceeding a limit
+  source will emit the missed numbers only and only for that client
+source will flush the history table when all clients caught up without missed arrays
+
+sequence number rollover operations
+sequence+sessionstamp
+
+suppression of duplicate requests -> suppression of outdated sequence updates
+
+all clients O(N) connect to all clients O(N) = O(N^2)
+all clients O(1) to a single host O(N) = O(N)
+
+asset download > versioned?
+ hashed/checksummed surely
